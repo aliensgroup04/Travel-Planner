@@ -13,22 +13,21 @@ from langchain_core.messages import SystemMessage, HumanMessage
 GOOGLE_API_KEY = "AIzaSyBMCc42a-cWcpnG1TfCC830kbHG20dAqpo"
 
 def get_travel_options(source, destination):
+    system_prompt = SystemMessage(
+        content="You are an AI-powered travel assistant. Provide multiple travel options (cab, train, bus, flight) with estimated costs, duration, and relevant travel tips."
+    )
+    user_prompt = HumanMessage(
+        content=f"I am traveling from {source} to {destination}. Suggest travel options with estimated cost, duration, and important details."
+    )
+
+    # ✅ Initialize AI model
+    llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro", google_api_key=GOOGLE_API_KEY)
+
     try:
-        system_prompt = SystemMessage(
-            content="Provide travel options from {} to {}.".format(source, destination)
-        )
-        user_prompt = HumanMessage(content="I am traveling from {} to {}.".format(source, destination))
-        
-        llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro", google_api_key=GOOGLE_API_KEY)
         response = llm.invoke([system_prompt, user_prompt])
-        
-        if response:
-            return response.content
-        else:
-            return "No response from AI."
-    
+        return response.content if response else "⚠️ No response from AI."
     except Exception as e:
-        return "An error occurred: {}".format(str(e))
+        return f"❌ Error fetching travel options: {str(e)}"
 
 st.title("Travel Planner Assistant")
 st.markdown("<h2>Your Personal Travel Guide</h2>", unsafe_allow_html=True)
