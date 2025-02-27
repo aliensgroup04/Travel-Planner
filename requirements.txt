@@ -1,7 +1,5 @@
 streamlit
-google-generativeai
 langchain
+langchain-core
 langchain-google-genai
-deep-translator
-textwrap3
-python-dotenv
+google-generativeai
