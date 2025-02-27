@@ -12,7 +12,6 @@ from langchain_core.messages import SystemMessage, HumanMessage
 
 GOOGLE_API_KEY = "AIzaSyBMCc42a-cWcpnG1TfCC830kbHG20dAqpo"
 
-Function to fetch AI-generated travel options
 def get_travel_options(source, destination):
     try:
         system_prompt = SystemMessage(
@@ -31,15 +30,12 @@ def get_travel_options(source, destination):
     except Exception as e:
         return "An error occurred: {}".format(str(e))
 
-Streamlit UI
 st.title("Travel Planner Assistant")
 st.markdown("<h2>Your Personal Travel Guide</h2>", unsafe_allow_html=True)
 
-Input fields for source and destination
 source = st.text_input("Enter your source location:")
 destination = st.text_input("Enter your destination location:")
 
-Button to fetch travel options
 if st.button("Get Travel Options"):
     if source and destination:
         options = get_travel_options(source, destination)
