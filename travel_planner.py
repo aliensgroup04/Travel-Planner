@@ -10,32 +10,47 @@ import os
 import streamlit as st
 from dotenv import load_dotenv
 from langchain_community.chat_models import ChatGoogleGenerativeAI
-from langchain.schema import HumanMessage
+from langchain.schema import HumanMessage, SystemMessage
 
 # Load API key from .env file
 load_dotenv()
-api_key = os.getenv("GOOGLE_API_KEY")
+api_key = os.getenv("AIzaSyBMCc42a-cWcpnG1TfCC830kbHG20dAqpo")
 
 if not api_key:
     st.error("Google API key is missing! Set it in a .env file or as an environment variable.")
 else:
     os.environ["GOOGLE_API_KEY"] = api_key
 
-# Initialize Google GenAI model
+# Initialize Google Generative AI model via LangChain
 try:
     model = ChatGoogleGenerativeAI(model="gemini-pro")
 except Exception as e:
     st.error(f"Error initializing AI model: {e}")
 
 def get_travel_recommendations(source, destination):
-    """Fetch travel recommendations using Google GenAI."""
+    """Fetch travel recommendations using LangChain and Google GenAI."""
     if not api_key:
         return "Error: API key not found!"
-    
-    prompt = f"Suggest travel options from {source} to {destination} with estimated costs (cab, train, bus, flights)."
-    
+
+    # 🔹 Enhanced travel prompt
+    prompt = f"""
+    You are an AI travel assistant. Provide the best travel options from {source} to {destination}.
+    Include estimated costs, duration, and comfort level for:
+    - 🚖 Cabs
+    - 🚌 Buses
+    - 🚆 Trains
+    - ✈ Flights
+
+    Highlight the **fastest** and **most budget-friendly** choices.
+    Provide the answer in a structured format with bullet points.
+    """
+
     try:
-        response = model([HumanMessage(content=prompt)])
+        messages = [
+            SystemMessage(content="You are a helpful AI travel assistant."),
+            HumanMessage(content=prompt)
+        ]
+        response = model(messages)
         return response.content if response else "No response from AI."
     except Exception as e:
         return f"Error fetching recommendations: {e}"
@@ -47,7 +62,12 @@ st.markdown("Enter your source and destination to get travel options.")
 source = st.text_input("Source", placeholder="Enter starting location")
 destination = st.text_input("Destination", placeholder="Enter destination")
 
-if st.button("Find Travel Options
-
+if st.button("Find Travel Options"):
+    if source and destination:
+        st.write("🔎 Fetching travel recommendations...")
+        recommendations = get_travel_recommendations(source, destination)
+        st.write(recommendations)
+    else:
+        st.warning("⚠️ Please enter both source and destination.")
 
 
