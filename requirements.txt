@@ -3,3 +3,6 @@ langchain
 langchain-core
 langchain-google-genai
 google-generativeai
+deep-translator
+textwrap3
+python-dotenv
