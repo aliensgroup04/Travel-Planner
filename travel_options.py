@@ -3,7 +3,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.output_parsers import StrOutputParser
 import os
-API_KEY = os.getenv("API_KEY") 
+API_KEY = os.getenv("AIzaSyBMCc42a-cWcpnG1TfCC830kbHG20dAqpo") 
 
 # Streamlit UI 
 st.title("Travel Planner")
