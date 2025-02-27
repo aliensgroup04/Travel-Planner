@@ -42,3 +42,6 @@ if st.button("Get Travel Options"):
     else:
         st.error("Please enter both source and destination.")
 
+st.markdown("<hr>", unsafe_allow_html=True)
+st.markdown("<h5 style='color: gray;'>Travel Planner made by Suman", unsafe_allow_html=True)
+
