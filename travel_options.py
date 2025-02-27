@@ -10,8 +10,9 @@ Original file is located at
 import streamlit as st
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import SystemMessage, HumanMessage
+import os
 
-GOOGLE_API_KEY = st.secrets.get('AIzaSyAZ01F26Iq4q9-P16ayZzv417pPdDK1x1c')
+GOOGLE_API_KEY = os.getenv('AIzaSyAZ01F26Iq4q9-P16ayZzv417pPdDK1x1c')
 
 def get_travel_options(source, destination):
     system_prompt = SystemMessage(
