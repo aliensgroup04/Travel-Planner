@@ -16,7 +16,7 @@ def get_travel_options(source, destination):
     llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro", google_api_key=GOOGLE_API_KEY)
 
     try:
-        response = llm.stream([system_prompt, user_prompt])
+        response = llm.chain([system_prompt, user_prompt])
         return response.content if response else "⚠️ No response from AI."
     except Exception as e:
         return f"❌ Error fetching travel options: {str(e)}"
